@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/{appname} -Dhttp.port=${PORT} -Dmongodb.uri=$MONGODB_URI
+web: target/universal/stage/bin/lpw-catalogo -Dhttp.port=$PORT -Dmongodb.uri=$MONGODB_URI
