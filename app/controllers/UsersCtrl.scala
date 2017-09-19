@@ -33,8 +33,6 @@ class UsersCtrl @Inject() (val reactiveMongoApi: ReactiveMongoApi) (implicit exe
   import models._
   import models.User._
 
-  implicit val userWrite = Json.writes[User]
-
   def deleteUser = Action.async(parse.json) {
     request =>
      collection.find(request.body.as[JsObject]).one[User].flatMap(u => 
