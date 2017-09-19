@@ -1,4 +1,4 @@
-name := """play-scala"""
+name := """lpw-catalogo"""
 
 version := "1.0-SNAPSHOT"
 
