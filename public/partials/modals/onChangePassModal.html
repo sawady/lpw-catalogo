@@ -1,0 +1,30 @@
+<div class="modal-header">
+	<h3 class="modal-title">Cambiar contraseña</h3>
+</div>
+<div class="modal-body">
+    <div ng-hide="msg == ''">
+        {{ msg }}
+    </div>
+	<form class="form-vertical" role="form" ng-submit="ok()">
+		<div class="form-group">
+			<label class="control-label">Usuario</label>
+			<input
+				type="text" class="form-control" name="user" id="user"
+				placeholder="" style="width:50%" ng-model="user.user">
+		</div>
+		<div class="form-group">
+			<label class="control-label">Vieja contraseña</label> 
+			<input
+				type="password" class="form-control" name="pass" id="pass"
+				placeholder="" style="width:50%" ng-model="user.pass">
+		</div>
+		<div class="form-group">
+			<label class="control-label">Nueva contraseña</label> 
+			<input
+				type="password" class="form-control" name="newPass" id="newPass"
+				placeholder="" style="width:50%" ng-model="user.newPass">
+		</div>
+		<button type="submit" class="btn btn-success" id="btn_create">Aceptar</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+	</form>
+</div>

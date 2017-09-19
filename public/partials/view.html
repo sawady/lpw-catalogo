@@ -1,0 +1,172 @@
+<div class="row mainRow" ng-controller="MovieCtrl as mc">
+	&NonBreakingSpace;
+	<div class="row">
+		<h4>
+			Películas y Documentales
+			<button ng-show="mc.puedeAgregar()" ng-click="mc.createMovie()"
+				class="btn btn-primary pull-right" id="btn_movie_create">Agregar película</button>
+		</h4>
+		<hr>
+	</div>
+
+	<div class="container searchPanels">
+		<form ng-submit="mc.getMovies()">
+			<div class="btn-group btn-group-justified">
+				<div class="btn-group">
+					<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+				</div>
+				<div class="btn-group">
+					<button class="btn btn-default" ng-click="mc.resetSearch()"><span class="glyphicon glyphicon-refresh"></span> Limpiar</button>
+				</div>
+			</div>
+			<hr>
+			<div class="row" style="overflow-y: scroll; height: 350px;">
+				<div ng-show="mc.puedeEditar()" class="panel panel-search panel-primary">
+					<div class="panel-heading">Link del Post</div>
+					<div class="panel-body">
+						<input class="form-control" type="url" ng-model="mc.search.postID">
+					</div>
+				</div>
+	
+				<div class="panel panel-search panel-default">
+					<div class="panel-heading">Título</div>
+					<div class="panel-body">
+						<input class="form-control" type="text" ng-model="mc.search.title"">
+					</div>
+				</div>
+	
+				<div class="panel panel-search panel-default">
+					<div class="panel-heading">Año</div>
+					<div class="panel-body">
+						<input class="form-control" type="number" ng-model="mc.search.year">
+					</div>
+				</div>
+	
+				<div class="panel panel-search panel-default">
+					<div class="panel-heading">Autor del post</div>
+					<div class="panel-body">
+						<input class="form-control" type="text"
+							ng-model="mc.search.posteador">
+					</div>
+				</div>
+	
+				<div class="panel panel-search panel-default">
+					<div class="panel-heading">Director</div>
+					<div class="panel-body">
+						<input class="form-control" type="text"
+							ng-model="mc.search.director">
+					</div>
+				</div>
+		
+				<option-many-search model="mc.idiomas"> </option-many-search>
+				<option-single-search model="mc.calidades"> </option-single-search>
+				<option-single-search model="mc.formatos"> </option-single-search>
+				<option-many-search model="mc.generos"> </option-many-search>
+				<option-many-search model="mc.actores"> </option-many-search>
+			</div>
+		</form>
+	</div>
+
+	<div class="container movieContainer">
+
+		<div class="row text-center">
+		    <div ng-hide="mc.movies.length == 0">{{mc.totalItems}} resultados</div>
+			<div ng-hide="mc.movies.length == 0">
+			<pagination total-items="mc.totalItems" ng-model="mc.currentPage"
+				ng-change="mc.pageChanged()" class="pagination-sm"
+				items-per-page="8" previous-text="anterior" boundary-links="true"
+				first-text="Primera" last-text="Última" next-text="siguiente"
+				max-size="10" rotate="false" num-pages="numPages"></pagination>
+			</div>
+		    <div ng-hide="mc.movies.length != 0">No se encontraron resultados</div>
+		</div>
+
+		<div class="row" ng-hide="mc.movies.length == 0">
+				<div class="panel-item-container thhh-animation" ng-repeat="m in mc.movies">
+					<div class="btn-group btn-group-xs editItemsButtons">
+						<button ng-show="mc.puedeEditar()" ng-click="mc.updateMovie(m)" class="btn btn-primary">Editar</button>
+						<button ng-show="mc.puedeBorrar()" ng-click="mc.openOnDelete(m)" class="btn btn-danger">Eliminar</button>
+					</div>
+					<div class="panel panel-movie panel-info" ng-mouseenter="isCollapsed = false;" ng-mouseleave="isCollapsed = true;" ng-init="isCollapsed = true;">
+						<div class="panel-body cuerpoPanel" style="background-image: url({{m.caratula}});">
+							<div class="tituloPanel">
+								<a href="{{m.postID}}" target="_blank">{{m.title}}<span> ({{m.year}})</span></a>
+							</div>
+							<img src="/assets/images/marco_movies.png" class="altoMarco">
+
+						    <div class="description-anim idiomasFlags" ng-show="isCollapsed">
+						        <span ng-repeat="lang in m.idioma" ng-switch="lang" style="opacity: 0.8;">
+							    	<span ng-switch-when="Latino"><img alt="Lat" src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/30px-Flag_of_Mexico.svg.png" tooltip="{{lang}}"></span>
+		   							<span ng-switch-when="Español"><img alt="Esp" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/30px-Flag_of_Spain.svg.png" tooltip="{{lang}}"></span>
+		   							<span ng-switch-when="Inglés"><img alt="Eng" src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/30px-Flag_of_the_United_States.svg.png" tooltip="{{lang}}"></span>
+		   							<span ng-switch-when="Japonés"><img alt="Jap" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/30px-Flag_of_Japan.svg.png" tooltip="{{lang}}"></span>
+		  							<span ng-switch-default><img style="width: 30px; height: 17px;" alt="Otro" src="http://img3.wikia.nocookie.net/__cb20130206140652/dofus/es/images/3/3d/Bandera_Internacional.png" tooltip="{{lang}}"></span>
+						        </span>
+						    </div>
+							<div class="description-anim showUpDescription" ng-show="!isCollapsed">
+								<div style="padding-left:5px; color: #000000; font-weight: 300;">
+										<p>
+											<strong class="field">de </strong> 
+											<a class="field" href="http://lopeordelaweb.li/perfil/{{m.posteador}}" target="_blank"> {{m.posteador}} </a> 
+										</p>
+										<p>
+										    <strong class="field">Idioma: </strong> 
+									        <span ng-repeat="lang in m.idioma" ng-switch="lang" style="opacity: 0.8;">
+										    	<span ng-switch-when="Latino"><img alt="Lat" src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/30px-Flag_of_Mexico.svg.png" tooltip="{{lang}}"></span>
+					   							<span ng-switch-when="Español"><img alt="Esp" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/30px-Flag_of_Spain.svg.png" tooltip="{{lang}}"></span>
+					   							<span ng-switch-when="Inglés"><img alt="Eng" src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/30px-Flag_of_the_United_States.svg.png" tooltip="{{lang}}"></span>
+					   							<span ng-switch-when="Japonés"><img alt="Jap" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/30px-Flag_of_Japan.svg.png" tooltip="{{lang}}"></span>
+					  							<span ng-switch-default><img style="width: 30px; height: 17px;" alt="Otro" src="http://img3.wikia.nocookie.net/__cb20130206140652/dofus/es/images/3/3d/Bandera_Internacional.png" tooltip="{{lang}}"></span>
+									        </span>
+								        </p>
+							    		<p ng-show="m.director">
+							    			<strong class="field">Director: </strong>
+							    			<span style="font-size: 12px;">{{m.director}}</span>
+							    		</p>
+							    		<p ng-hide="m.reparto.length == 0"> 
+							    			<strong class="field">Reparto: </strong>
+							    			<span style="font-size: 12px;">{{(m.reparto).join(', ')}}</span>
+							    		</p>
+							    		<p>
+							    			<strong class="field">Calidad: </strong>
+							    			<span style="font-size: 12px;">{{m.calidad}}</span>
+							    		</p>
+							    		<p>
+							    			<strong class="field">Formato: </strong>
+							    			<span style="font-size: 12px;">{{m.formato}}</span>
+							    		</p>
+							    		<p>
+							    			<strong class="field">Genero: </strong>
+							    			<span style="font-size: 12px;">{{(m.genero).join(', ')}}</span>
+							    		</p>
+							    		<p ng-show="m.altTitle">
+							    			<strong class="field">Titulo alt.: </strong>
+							    			<span style="font-size: 12px;">{{m.altTitle}}</span>
+							    		</p>
+							    		<p>
+							    			<strong class="field">Sinopsis: </strong>
+							    		</p>
+							    		<p align="justify" style="font-size: 11px;"> {{m.sinopsis}} </p>
+					    		</div>
+				    		</div>
+	  					</div>
+					</div>
+				</div>
+		</div>
+		
+		<div class="text-center" ng-hide="mc.movies.length == 0">
+			<pagination total-items="mc.totalItems" ng-model="mc.currentPage"
+				ng-change="mc.pageChanged()" class="pagination-sm"
+				items-per-page="8" previous-text="anterior" boundary-links="true"
+				first-text="Primera" last-text="Última" next-text="siguiente"
+				max-size="10" rotate="false" num-pages="numPages"></pagination>
+		</div>
+
+	</div>
+	
+</div>
+
+<!-- <div class="row"> -->
+<!-- 	<pre>{{ mc.search | json }}</pre> -->
+<!-- 	<pre>{{ mc.movies | json }}</pre> -->
+<!-- </div> -->

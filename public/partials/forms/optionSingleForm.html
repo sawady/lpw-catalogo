@@ -1,0 +1,13 @@
+<div class="form-group col-sm-4 col-md-4 col-lg-4">
+	<label id="lbl_{{model.title}}" for="{{model.title}}"
+		class="control-label">{{model.title}}</label>
+	<div class="btn-group-vertical" id="{{model.title}}">
+		<label class="btn btn-info" ng-repeat="opt in model.opciones"
+			ng-model="model.selected" btn-radio="opt" uncheckable>{{
+			opt }}</label> <span class="input-group-btn"> <input type="text"
+			class="form-control" ng-model="model.other">
+			<button class="btn btn-default" type="button"
+				ng-click="model.addOther()">Agregar</button>
+		</span>
+	</div>
+</div>

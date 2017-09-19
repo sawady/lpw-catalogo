@@ -1,0 +1,57 @@
+<div class="row mainRow" ng-controller="MovieCtrl as ctrl">
+	&NonBreakingSpace;
+	<div class="row">
+		<h4>
+			Películas y Documentales
+			<add-item-button model="ctrl.service"></add-item-button>
+		</h4>
+		<hr>
+	</div>
+
+	<search-panel model="ctrl.service">
+		<post-id-search ng-show="ctrl.service.puedeBuscarPost()" post="ctrl.service.search.postID"> </post-id-search>
+		
+		<text-input-search title="'Título'" model="ctrl.service.search.title"> </text-input-search>
+		<number-input-search title="'Año'" model="ctrl.service.search.year"> </number-input-search>
+		<text-input-search title="'Autor del post'" model="ctrl.service.search.posteador"> </text-input-search>
+		<text-input-search title="'Director'" model="ctrl.service.search.director"> </text-input-search>
+		
+		<option-many-search model="ctrl.service.idiomas"> </option-many-search>
+		<option-single-search model="ctrl.service.calidades"> </option-single-search>
+		<option-single-search model="ctrl.service.formatos"> </option-single-search>
+		<option-many-search model="ctrl.service.generos"> </option-many-search>
+		<option-many-search model="ctrl.service.actores"> </option-many-search>
+	</search-panel>
+
+	<pagination-view model="ctrl.service.pageCtrl">
+		<div class="panel-item-container thhh-animation" ng-repeat="m in ctrl.service.results">
+			<item-buttons model="ctrl.service" item="m"></item-buttons>
+			<div class="panel panel-movie panel-info" ng-mouseenter="isCollapsed = false;" ng-mouseleave="isCollapsed = true;" ng-init="isCollapsed = true;">
+				<div class="panel-body cuerpoPanel" style="background-image: url({{m.caratula}});">
+					<div class="tituloPanel tituloPanelMovies">
+						<a href="{{m.postID}}" target="_blank">{{m.title}}</a>
+					</div>
+					<marco model="ctrl.service.marco"></marco>
+
+				    <div class="description-anim idiomasFlags" ng-show="isCollapsed">
+				        <idioma-flags model="m.idioma"></idioma-flags>
+				    </div>
+					<div class="description-anim showUpDescriptionMovies" ng-show="!isCollapsed">
+						<div style="padding-left:5px; color: #000000; font-weight: 300;">
+								<posteador-field model='m.posteador'></posteador-field>
+								<simple-field model="m.year" title="'Año'"></simple-field>
+								<idioma-field model= "m.idioma" title="'Idioma'"></idioma-field>
+								<simple-field model="m.director" title="'Director'"></simple-field>
+								<many-field model="m.reparto" title="'Reparto'"></many-field>
+								<simple-field model="m.calidad" title="'Calidad'"></simple-field>	
+								<simple-field model="m.formato" title="'Formato'"></simple-field>
+								<many-field model="m.genero" title="'Genero'"></many-field>	
+								<simple-field model="m.altTitle" title="'Titulo alt.'"></simple-field>
+								<sinopsis-field title="'Sinopsis'" model="m.sinopsis"></sinopsis-field>
+			    		</div>
+		    		</div>
+ 				</div>
+			</div>
+		</div>
+	</pagination-view>
+</div>

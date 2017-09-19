@@ -1,0 +1,15 @@
+<div class="container movieContainer">
+		<div class="row text-center">
+		    <div ng-show="model.thereAreItems()">{{model.getTotalItems()}} resultados</div>
+			<pagination-bar ng-show="model.thereAreItems()" model="model"></pagination-bar>
+		    <div ng-hide="model.thereAreItems()">No se encontraron resultados</div>
+		</div>
+
+		<div class="row" ng-show="model.thereAreItems()">
+		    <div ng-transclude></div>
+		</div>
+		
+		<div class="text-center" ng-show="model.thereAreItems()">
+			<pagination-bar model="model"></pagination-bar>
+		</div>
+</div>

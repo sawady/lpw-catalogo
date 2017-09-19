@@ -1,0 +1,136 @@
+package controllers
+
+import models.ItemModel
+
+import javax.inject._
+import play.api._
+import play.api.mvc._
+import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.concurrent.duration._
+
+/*
+import play.api.libs.json.Format
+import play.api.libs.json.JsArray
+import play.api.libs.json.JsObject
+import play.api.libs.json.JsValue
+import play.api.libs.json.Json
+import play.api.libs.json.Json.toJsFieldJsValueWrapper
+import play.modules.reactivemongo.MongoController
+import play.modules.reactivemongo.json.ImplicitBSONHandlers
+import play.modules.reactivemongo.json.collection.JSONCollection
+import reactivemongo.api.Cursor
+import reactivemongo.api.QueryOpts
+import reactivemongo.core.commands.Count
+*/
+import utils.Utils
+
+abstract class Items[T] (implicit exec: ExecutionContext) extends Controller {
+  
+  val model: ItemModel[T]
+  val colName: String
+  
+  // implicit lazy val format: Format[T] = model.format
+  
+  /*
+   * Get a JSONCollection (a Collection implementation that is designed to work
+   * with JsObject, Reads and Writes.)
+   * Note that the `collection` is not a `val`, but a `def`. We do _not_ store
+   * the collection reference to avoid potential problems in development with
+   * Play hot-reloading.
+   */
+
+  /*
+
+  def collection: JSONCollection = db.collection[JSONCollection](colName)
+  
+  def JsonProcess(block: JsValue => Future[SimpleResult]): Action[JsValue] = Action.async(parse.json) {
+    request => block(request.body.as[JsValue])
+  }
+  
+  def JsonProcessValidated(block: T => Future[SimpleResult]): Action[JsValue] = JsonProcess {
+    request => validateAndThen(Utils.fromWeb(request))(block)
+  }
+  
+  def validateAndThen(jr: JsValue)(block: T => Future[SimpleResult]): Future[SimpleResult] = {
+      // `item` is an instance of their respective case class
+      jr.validate[T].map { block(_) }.getOrElse(Future.successful(BadRequest("invalid json")))
+  }
+
+  // ------------------------------------------ //
+  // Using case classes + Json Writes and Reads //
+  // ------------------------------------------ //
+
+  def delete = JsonProcess {
+    request =>
+      val jr = Utils.fromWeb(request)
+      collection.remove(Utils.getId(jr)).map {
+        lastError =>
+          Ok(s"Item Deleted")
+      }
+  }
+
+  def save = JsonProcessValidated {
+    item =>
+      collection.save(item).map {
+        lastError =>
+          Created(s"Item Created")
+      }
+  }
+
+  def countLike() = JsonProcess { jr =>
+    val search = jr.\("search")
+    val validKeys = jr.\("validKeys").as[List[String]]
+    
+    val obj = model.toSearchFields(search, validKeys)
+
+    val req = ImplicitBSONHandlers.JsObjectWriter.write(model.toSearchFields(search, validKeys))
+
+    collection.db.command(Count(collection.name, Some(req))).map { count =>
+      Ok(Json.obj("count" -> count))
+    }
+  }
+  
+  def find = JsonProcess {
+    jr =>
+      val search = jr.\("search")
+      val validKeys = jr.\("validKeys").as[List[String]]
+      val currentPage = jr.\("page").as[Int]
+      findLike(model.toSearchFields(search, validKeys), currentPage)
+  }
+
+  def findLike(jsobj: JsObject, pageNumber: Int) = {
+    val numberPerPage = 8
+
+    val cursor: Cursor[T] = collection.
+      // find all
+      find(jsobj).
+      // sort them by creation date
+      sort(Json.obj("$natural" -> -1)).
+      // skip based on pageNumber
+      options(QueryOpts((pageNumber - 1) * numberPerPage, numberPerPage)).
+      // perform the query and get a cursor of JsObject
+      cursor[T]
+
+    // gather all the JsObjects in a list
+    val futureList: Future[List[JsValue]] = cursor.collect[List](numberPerPage).map { xs =>
+      xs.map { mv =>
+        Utils.toWeb(Json.toJson(mv))
+      }
+    }
+
+    // transform the list into a JsArray
+    val futureJsonArray: Future[JsArray] = futureList.map { items =>
+      Json.arr(items)
+    }
+
+    // everything's ok! Let's reply with the array
+    futureJsonArray.map {
+      items =>
+        Ok(items(0))
+    }
+
+  }
+
+  */
+
+}

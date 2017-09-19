@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es" ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<title>Lo Peor de la Web</title>
+<!-- Latest compiled and minified Bootstrap CSS -->
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" media='screen'
+	href='@routes.Assets.versioned("stylesheets/loading-bar.css")'>
+<link rel="stylesheet" media='screen'
+	href='@routes.Assets.versioned("stylesheets/main.css")'>
+<link rel="icon" type="image/png"
+	href='@routes.Assets.versioned("images/favicon.jpg")' />
+</head>
+<body>
+	<div class="container-fluid mainContainer">
+		<navigation-header></navigation-header>
+		<div ng-view class="mainView-animation"></div>
+	</div>
+</body>
+
+<!--  EXTERNAL LIBRARIES -->
+
+<script
+	src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.js'
+	type="text/javascript"></script>
+
+<script
+	src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular-route.js'
+	type="text/javascript"></script>
+
+<script
+	src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular-animate.js'
+	type="text/javascript"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
+	type="text/javascript"></script>
+	
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
+    type="text/javascript"></script>	
+	
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular-cookies.js"
+	type="text/javascript"></script>	
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"
+	type="text/javascript"></script>
+
+<script src='@routes.Assets.versioned("javascripts/vendor/ui-utils.js")'
+	type="text/javascript"></script>
+
+<script
+	src='@routes.Assets.versioned("javascripts/vendor/ui-bootstrap-tpls-0.11.0.js")'
+	type="text/javascript"></script>
+
+<script src='@routes.Assets.versioned("javascripts/vendor/loading-bar.js")'
+	type="text/javascript"></script>
+
+<script
+	src='@routes.Assets.versioned("javascripts/vendor/angular-ellipsis.min.js")'
+	type="text/javascript"></script>
+	
+<script src='@routes.Assets.versioned("javascripts/main.js")'
+	type="text/javascript"></script>
+	
+<!-- Coffee script compilled resources-->
+
+<!--  APP MAIN FILES -->
+<script src='@routes.Assets.versioned("javascripts/app.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/common/Config.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/directives/AppVersion.js")'
+	type="text/javascript"></script>
+<script
+	src='@routes.Assets.versioned("javascripts/directives/MyDirectives.js")'
+	type="text/javascript"></script>
+
+<!--  FOR EVERY ITEM -->
+<script src='@routes.Assets.versioned("javascripts/items/ItemService.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/items/PageCtrl.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/items/OptionCtrl.js")'
+	type="text/javascript"></script>
+
+<!--  MOVIES -->
+<script src='@routes.Assets.versioned("javascripts/movies/MovieService.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/movies/MovieCtrl.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/movies/SaveMovieCtrl.js")'
+	type="text/javascript"></script>
+
+<!--  GAMES -->
+<script src='@routes.Assets.versioned("javascripts/games/GameService.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/games/GameCtrl.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/games/SaveGameCtrl.js")'
+	type="text/javascript"></script>
+
+<!--  MUSIC -->
+<script src='@routes.Assets.versioned("javascripts/music/MusicService.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/music/MusicCtrl.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/music/SaveMusicCtrl.js")'
+	type="text/javascript"></script>
+	
+<!--  SERIES -->
+<script src='@routes.Assets.versioned("javascripts/series/SerieService.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/series/SerieCtrl.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/series/SaveSerieCtrl.js")'
+	type="text/javascript"></script>
+
+<!--  SOFT -->
+<script src='@routes.Assets.versioned("javascripts/soft/SoftService.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/soft/SoftCtrl.js")'
+	type="text/javascript"></script>
+<script src='@routes.Assets.versioned("javascripts/soft/SaveSoftCtrl.js")'
+	type="text/javascript"></script>
+	
+<!--  USERS -->
+<script src='@routes.Assets.versioned("javascripts/users/UsersService.js")'
+	type="text/javascript"></script>
+	<script src='@routes.Assets.versioned("javascripts/users/UserCtrl.js")'
+	type="text/javascript"></script>
+
+</html>

@@ -1,0 +1,7 @@
+<span ng-hide="!model || model.length == 0" ng-repeat="lang in model" ng-switch="lang" style="opacity: 0.8;">
+	<span ng-switch-when="Latino"><img alt="Lat" src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/30px-Flag_of_Mexico.svg.png" tooltip="{{lang}}"></span>
+	<span ng-switch-when="Español"><img alt="Esp" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/30px-Flag_of_Spain.svg.png" tooltip="{{lang}}"></span>
+	<span ng-switch-when="Inglés"><img alt="Eng" src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/30px-Flag_of_the_United_States.svg.png" tooltip="{{lang}}"></span>
+	<span ng-switch-when="Japonés"><img alt="Jap" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/30px-Flag_of_Japan.svg.png" tooltip="{{lang}}"></span>
+	<span ng-switch-default><img style="width: 30px; height: 17px;" alt="Otro" src="http://img3.wikia.nocookie.net/__cb20130206140652/dofus/es/images/3/3d/Bandera_Internacional.png" tooltip="{{lang}}"></span>
+ </span>

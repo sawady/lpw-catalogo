@@ -1,0 +1,93 @@
+<div class="row">
+	&NonBreakingSpace;
+	<div class="row">
+	<div ng-controller="SaveSerieCtrl as cmc">
+		<div class="row">
+			<legend class="col-sm-12 col-md-12 col-lg-12">Edición</legend>
+		</div>
+		<form id="SaveSerieForm" name="SaveSerieForm" class="form-vertical"
+			role="form" ng-submit="cmc.save()">
+			<div class="row">
+				<div class="cointainer col-sm-4 col-md-4 col-lg-4">
+
+					<div class="form-inline">
+						<div class="form-group" style="margin-right: 15px;">
+							<label for="title" class="control-label">Título</label> 
+							<input
+								type="text" class="form-control" name="title" id="title"
+								placeholder="" style="width:150px" ng-model="cmc.item.title">
+						</div>
+						<div class="form-group">
+							<label id="lbl_year" for="year" class="control-label"
+								is-required="SaveSerieForm.year">Año (opcional)</label> 
+							<input type="number"
+								class="form-control" name="year" id="year"
+								style="width:100px"
+								ng-model="cmc.item.year">
+						</div>
+					</div>
+					
+					<br>
+
+					<div class="form-group">
+						<label id="lbl_sinopsis" for="sinopsis" class="control-label">Descripción (opcional)</label>
+
+						<textarea rows="5" cols="50" class="form-control" name="sinopsis"
+							id="sinopsis" placeholder="" ng-model="cmc.item.description">
+					    </textarea>
+					</div>
+
+					<div class="form-group">
+						<label id="lbl_linkPost" for="linkPost" class="control-label">Link
+							al Post</label> <input type="url" class="form-control" name="linkPost"
+							id="linkPost" placeholder="" ng-model="cmc.item.postID">
+					</div>
+
+					<div class="form-group">
+						<label id="lbl_posteador" for="posteador" class="control-label">Nombre
+							del autor</label> <input type="text" class="form-control"
+							name="posteador" id="posteador" placeholder=""
+							style="width:50%"
+							ng-model="cmc.item.posteador">
+					</div>
+
+					<div class="form-group">
+						<label id="lbl_caratula" for="caratula" class="control-label">Caratula
+							(link)</label> <input type="url" class="form-control" name="caratula"
+							id="caratula" placeholder="" ng-model="cmc.item.caratula">
+					</div>
+
+					<div class="thumbnail" style="width: 170px; height: 230px;">
+						<img ng-src="{{cmc.item.caratula}}"
+							class="img-rounded">
+					</div>
+
+				</div>
+
+				<div class="cointainer col-sm-8 col-md-8 col-lg-8">
+					<option-single-form model="cmc.capitulo"> </option-single-form>
+					<option-many-form model="cmc.temporada"> </option-many-form>
+					<option-single-form model="cmc.format"> </option-single-form>
+					<option-many-form   model="cmc.genero"> </option-many-form>
+					<option-many-form   model="cmc.idioma"> </option-many-form>
+					<option-single-form model="cmc.calidad"> </option-single-form>
+					<option-many-form   model="cmc.directores"> </option-many-form>
+					<option-many-form   model="cmc.reparto"> </option-many-form>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<div class="text-center">
+							<a back id="btn_cancel" class="btn btn-warning">Cancelar</a>
+							<button type="submit" class="btn btn-success" id="btn_create">Guardar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+<!-- 		<div class="row"> -->
+<!-- 			<pre>{{ cmc.item | json }}</pre> -->
+<!-- 		</div> -->
+	</div>
+	</div>
+</div>

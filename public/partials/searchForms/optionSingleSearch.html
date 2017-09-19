@@ -1,0 +1,16 @@
+<div class="panel panel-search panel-default">
+	<div class="panel-heading">{{ model.title }}</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<div class="btn-group-vertical" id="{{model.title}}">
+				<label class="btn btn-info" ng-repeat="opt in model.opciones"
+					ng-model="model.selected" btn-radio="opt" uncheckable>{{
+					opt }}</label> <span class="input-group-btn"> <input type="text"
+					class="form-control" ng-model="model.other">
+					<button class="btn btn-default" type="button"
+						ng-click="model.addOther()">Agregar</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

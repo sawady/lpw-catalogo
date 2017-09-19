@@ -1,0 +1,6 @@
+db.eval(function() { // para cambiar el valor de un field por un array que lo contiene
+    db.series.find({ temporada: { $type: 2 } }).forEach(function(e) {
+        e.temporada = [e.temporada];
+        db.series.save(e);
+    });
+});

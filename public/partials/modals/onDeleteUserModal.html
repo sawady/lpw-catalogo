@@ -1,0 +1,21 @@
+<div class="modal-header">
+	<h3 class="modal-title">Borrar usuario</h3>
+</div>
+<div class="modal-body">
+    <div ng-hide="msg == ''">
+        {{ msg }}
+    </div>
+	<form class="form-vertical" role="form" ng-submit="ok()">
+		<div class="form-group">
+			<label class="control-label">Usuario</label>
+			<input
+				type="text" class="form-control" name="user" id="user"
+				placeholder="" style="width:50%" ng-model="user.user">
+		</div>
+		<button type="submit" class="btn btn-success" id="btn_create">Aceptar</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+<!-- 		<div class="row"> -->
+<!-- 			<pre>{{ user | json }}</pre> -->
+<!-- 		</div> -->
+	</form>
+</div>

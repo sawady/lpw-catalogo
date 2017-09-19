@@ -1,0 +1,45 @@
+<div class="modal-header">
+	<h3 class="modal-title">Agregar usuario</h3>
+</div>
+<div class="modal-body">
+    <div ng-hide="msg == ''">
+        {{ msg }}
+    </div>
+	<form class="form-vertical" role="form" ng-submit="ok()">
+		<div class="form-group">
+			<label class="control-label">Usuario</label>
+			<input
+				type="text" class="form-control" name="user" id="user"
+				placeholder="" style="width:50%" ng-model="user.user">
+		</div>
+		<div class="form-group">
+			<label class="control-label">Contraseña</label> 
+			<input
+				type="password" class="form-control" name="pass" id="pass"
+				placeholder="" style="width:50%" ng-model="user.pass">
+		</div>
+		<div class="form-group">
+			<label class="control-label">Rol</label> 
+		    <div class="btn-group">
+		        <label class="btn btn-sm btn-primary" ng-model="user.role" btn-radio="'admin'" uncheckable>admin</label>
+		        <label class="btn btn-sm btn-primary" ng-model="user.role" btn-radio="'mod'" uncheckable>mod</label>
+		        <label class="btn btn-sm btn-primary" ng-model="user.role" btn-radio="'uploader'" uncheckable>uploader</label>
+		    </div>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Catalogo (si no es admin)</label> 
+		    <div class="btn-group">
+		        <label class="btn btn-sm btn-primary" ng-model="user.catalogs.movies" btn-checkbox>Peliculas</label>
+		        <label class="btn btn-sm btn-primary" ng-model="user.catalogs.games" btn-checkbox>Juegos</label>
+		        <label class="btn btn-sm btn-primary" ng-model="user.catalogs.music" btn-checkbox>Musica</label>
+		        <label class="btn btn-sm btn-primary" ng-model="user.catalogs.series" btn-checkbox>Series</label>
+		        <label class="btn btn-sm btn-primary" ng-model="user.catalogs.soft" btn-checkbox>Soft</label>
+		    </div>
+		</div>
+		<button type="submit" class="btn btn-success" id="btn_create">Aceptar</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+<!-- 		<div class="row"> -->
+<!-- 			<pre>{{ user | json }}</pre> -->
+<!-- 		</div> -->
+	</form>
+</div>
