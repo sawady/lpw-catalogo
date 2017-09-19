@@ -1,0 +1,1 @@
+web: target/universal/stage/bin/{appname} -Dhttp.port=${PORT} -Dmongodb.uri=$MONGODB_URI
