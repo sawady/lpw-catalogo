@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/lpw-catalogo -Dhttp.port=$PORT -Dmongodb.uri=$MONGODB_URI?authMode=scram-sha1
+web: target/universal/stage/bin/lpw-catalogo -Dhttp.port=$PORT -Dmongodb.uri=$MONGODB_URI
