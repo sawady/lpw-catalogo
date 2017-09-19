@@ -1,16 +1,14 @@
 package models
 
 import play.api.libs.json._
-
-/*
-import reactivemongo.bson.BSONDocumentReader
-import reactivemongo.bson.BSONDocumentWriter
-import reactivemongo.bson.BSONObjectID
+// import reactivemongo.bson.BSONDocumentReader
+// import reactivemongo.bson.BSONDocumentWriter
 import play.modules.reactivemongo.json.BSONFormats._
-*/
+
+import reactivemongo.bson.BSONObjectID
 
 case class Movie (
-//  _id: Option[BSONObjectID],
+  _id: Option[BSONObjectID],
   title: String,
   year: Option[Int],
   sinopsis: Option[String],

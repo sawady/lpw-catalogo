@@ -2,13 +2,11 @@ package models
 
 import play.api.libs.json._
 
-/*
 import reactivemongo.bson.BSONObjectID
 import play.modules.reactivemongo.json.BSONFormats._
-*/
 
 case class Music (
-//  _id: Option[BSONObjectID],
+  _id: Option[BSONObjectID],
   title: String,
   year: Option[Int],
   postID: String,

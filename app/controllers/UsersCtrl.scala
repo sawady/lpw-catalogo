@@ -1,27 +1,30 @@
 package controllers
 
-import akka.actor.ActorSystem
 import javax.inject._
-import play.api._
-import play.api.mvc._
+
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.concurrent.duration._
 
-/*
-import play.modules.reactivemongo.MongoController
-import play.modules.reactivemongo.json.BSONFormats._
-import play.modules.reactivemongo.json.ImplicitBSONHandlers
-import play.modules.reactivemongo.json.collection.JSONCollection
+import play.api._
+import play.api.mvc._
+import play.api.libs.json._
+
+import play.modules.reactivemongo.json.collection._
+import play.modules.reactivemongo.{
+  MongoController,
+  ReactiveMongoApi,
+  ReactiveMongoComponents
+}
+
+// BSON-JSON conversions/collection
+import reactivemongo.play.json._
 import reactivemongo.api.Cursor
-import reactivemongo.api.QueryOpts
-import reactivemongo.bson.BSONDocument
-import reactivemongo.core.commands.Count
-*/
+
 import utils.Utils
 
-class UsersCtrl @Inject() (implicit exec: ExecutionContext) extends Controller {
+class UsersCtrl @Inject() (val reactiveMongoApi: ReactiveMongoApi) (implicit exec: ExecutionContext) extends Controller with MongoController with ReactiveMongoComponents {
 
-  // def collection: JSONCollection = db.collection[JSONCollection]("users")
+  def collection: JSONCollection = db.collection[JSONCollection]("users")
 
   // ------------------------------------------ //
   // Using case classes + Json Writes and Reads //
@@ -30,11 +33,11 @@ class UsersCtrl @Inject() (implicit exec: ExecutionContext) extends Controller {
   import models._
   import models.User._
 
-  /*
+  implicit val userWrite = Json.writes[User]
 
   def deleteUser = Action.async(parse.json) {
     request =>
-     collection.find(request.body.as[JsValue]).one[User].flatMap(u => 
+     collection.find(request.body.as[JsObject]).one[User].flatMap(u => 
          u match {
            case None => Future.successful(BadRequest("El usuario no existe"))
            case Some(oldUser) => {
@@ -50,7 +53,7 @@ class UsersCtrl @Inject() (implicit exec: ExecutionContext) extends Controller {
   def changePass = Action.async(parse.json) {
     request =>
       // cambio el id
-      val jr = Utils.fromWeb(request.body.as[JsValue])
+      val jr = Utils.fromWeb(request.body.as[JsObject])
 
       jr.validate[UserNewPass].map {
         user =>
@@ -72,7 +75,7 @@ class UsersCtrl @Inject() (implicit exec: ExecutionContext) extends Controller {
   def saveUser = Action.async(parse.json) {
     request =>
       // cambio el id
-      val jr = Utils.fromWeb(request.body.as[JsValue])
+      val jr = Utils.fromWeb(request.body.as[JsObject])
 
       jr.validate[User].filterNot(user => user.user.isEmpty() || user.role.isEmpty() || user.role.isEmpty()).map {
         user =>
@@ -91,7 +94,7 @@ class UsersCtrl @Inject() (implicit exec: ExecutionContext) extends Controller {
   
   def findUser = Action.async(parse.json) {
     request =>
-      val jr = request.body.as[JsValue]
+      val jr = request.body.as[JsObject]
       
       val cursor: Cursor[User] = collection.
         find(jr).
@@ -106,7 +109,5 @@ class UsersCtrl @Inject() (implicit exec: ExecutionContext) extends Controller {
           }
       }
   }
-
-  */
 
 }

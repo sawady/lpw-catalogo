@@ -2,13 +2,11 @@ package models
 
 import play.api.libs.json._
 
-/*
 import reactivemongo.bson.BSONObjectID
 import play.modules.reactivemongo.json.BSONFormats._
-*/
 
 case class Soft (
-//  _id: Option[BSONObjectID],
+  _id: Option[BSONObjectID],
   title: String,
   postID: String,
   posteador: String,
