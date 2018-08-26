@@ -12,10 +12,10 @@ class MovieService
         
         @totalItems = 0
         
-        @idiomasDefault = ['Latino','Español','Inglés', 'Japonés', 'Subtitulado']
+        @idiomasDefault = ['Latino','Español','Inglés', 'Japonés', 'Chino', 'Francés', 'Alemán', 'Portugués', 'Italiano', 'Subtitulado']
         @formatosDefault = ['AVI', 'MP4', 'MKV', 'MT2', 'ISO']
         @calidadesDefault = ['DVDRip', 'BRip 720p', 'BRip 1080p', 'DVD', 'DVDFULL', 'HDRip']
-        @generosDefault = ['Acción', 'Anime', 'Aventura', 'Bélica', 'Ciencia Ficción', 'Comedia', 'Documental', 'Drama', 'Infantil', 'Intriga', 'Musical', 'Romántica', 'Suspenso', 'Terror', 'Thriller', 'Western']
+        @generosDefault = ['Acción', 'Animación', 'Anime', 'Aventura', 'Bélica', 'Ciencia Ficción', 'Comedia', 'Documental', 'Drama', 'Fantástico', 'Infantil', 'Intriga', 'Musical', 'Policial', 'Romántica', 'Suspenso', 'Terror', 'Thriller', 'Western']
 
         @idiomas   = @OptionCtrl.newManyModel('Idioma', @idiomasDefault)
         @formatos  = @OptionCtrl.newSingleModel('Formato', @formatosDefault)
