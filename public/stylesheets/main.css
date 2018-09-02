@@ -11,6 +11,22 @@ img {
 	cursor: pointer;
 }
 
+.main-container {
+  display: flex;
+  max-height: 760px;
+}
+
+.search-real-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-form {
+  overflow-y: scroll; 
+  height: 100%;
+}
+
 .botonUsuario {
 	cursor: pointer;
 }
@@ -315,9 +331,8 @@ bottom: 4px;
 }
 
 .searchPanels {
-	width: 20%;
 	max-width: 300px;
-	float: left;	
+  height: 100%;
 }
 
 .panel-search {

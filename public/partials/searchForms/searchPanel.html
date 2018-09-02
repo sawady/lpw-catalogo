@@ -1,5 +1,5 @@
 <div class="container searchPanels">
-	<form ng-submit="model.getItems()">
+	<form ng-submit="model.getItems()" class="search-real-form">
 		<div class="btn-group btn-group-justified">
 			<div class="btn-group">
 				<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
@@ -9,6 +9,6 @@
 			</div>
 		</div>
 		<hr>
-		<div class="row" style="overflow-y: scroll; height: 350px;" ng-transclude></div>
+		<div class="search-form" ng-transclude></div>
 	</form>
 </div>
