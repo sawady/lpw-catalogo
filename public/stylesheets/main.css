@@ -59,9 +59,52 @@ body {
 }
 
 .movieContainer {
-  float: left;
-  width: 80%;
-  padding-left: 0px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+@media (max-width: 1175px) and (min-width: 765px) {
+  .sections {
+    display: none;
+  }
+}
+
+.main-items-container {
+  display: flex;
+  max-width: 1280px;
+  margin: auto;
+}
+
+.panel-item-container {
+  margin-bottom: 30px;
+  height: 310px;
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+@media (max-width: 1545px) {
+  .panel-item-container {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+}
+
+@media (max-width: 1425px) {
+  .panel-item-container {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+.items-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.pagination-view {
+  flex: 1;
 }
 
 .mainContainer {
@@ -83,14 +126,6 @@ body {
 	background-color: #df6a78;
 	border-bottom:2px solid #b25560;
 	outline: none;
-}
-
-.panel-item-container {
-  margin-bottom: 2%;
-  width: 20%;
-  margin-left: 5%;
-  float: left;
-  height: 325px;
 }
 
 .editItemsButtons {

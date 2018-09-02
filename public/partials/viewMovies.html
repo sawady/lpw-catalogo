@@ -24,7 +24,7 @@
 			<option-many-search model="ctrl.service.actores"> </option-many-search>
 		</search-panel>
 
-		<pagination-view model="ctrl.service.pageCtrl">
+		<pagination-view model="ctrl.service.pageCtrl" class="pagination-view">
 			<div class="panel-item-container thhh-animation" ng-repeat="m in ctrl.service.results">
 				<item-buttons model="ctrl.service" item="m"></item-buttons>
 				<div class="panel panel-movie panel-info" ng-mouseenter="isCollapsed = false;" ng-mouseleave="isCollapsed = true;" ng-init="isCollapsed = true;">

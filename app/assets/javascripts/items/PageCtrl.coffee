@@ -19,6 +19,15 @@ class PageCtrl
     getResults: () ->
         return @service.getResults()
 
+    getMaxPages: () ->
+        size = document.querySelectorAll(".main-items-container")[0].clientWidth;
+        console.log(size)
+        if size < 480
+           return 3
+        if size < 580
+           return 5
+        return 10
+
 class PageService
 
     constructor: (@$log) ->

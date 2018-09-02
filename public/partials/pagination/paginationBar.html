@@ -2,4 +2,4 @@
 	ng-change="model.pageChanged()" class="pagination-sm"
 	items-per-page="8" previous-text="anterior" boundary-links="true"
 	first-text="Primera" last-text="Última" next-text="siguiente"
-	max-size="10" rotate="false" num-pages="numPages"></pagination>
+	max-size="model.getMaxPages()" rotate="false" num-pages="numPages"></pagination>
