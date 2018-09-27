@@ -20,8 +20,7 @@ class PageCtrl
         return @service.getResults()
 
     getMaxPages: () ->
-        size = document.querySelectorAll(".main-items-container")[0].clientWidth;
-        console.log(size)
+        size = document.querySelectorAll(".main-items-container")[0].clientWidth
         if size < 480
            return 3
         if size < 580

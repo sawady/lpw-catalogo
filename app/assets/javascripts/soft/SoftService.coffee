@@ -50,6 +50,11 @@ class SoftService
         @selectedItem = item
         @ItemService.updateForm()
 
+    cloneItem: (item) ->
+        @selectedItem = Object.assign({}, item)
+        @selectedItem._id = undefined
+        @ItemService.updateForm()
+
     deleteItem: (item) ->
         @ItemService.delete(item)
               .then(

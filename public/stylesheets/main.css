@@ -11,6 +11,10 @@ img {
 	cursor: pointer;
 }
 
+.anim-header :hover {
+  opacity: 0.9;
+}
+
 .main-container {
   display: flex;
   max-height: 760px;

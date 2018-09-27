@@ -4,4 +4,4 @@
 
 "C:\Program Files\MongoDB\Server\3.6\bin\mongorestore" -h ds139844.mlab.com:39844 -d heroku_ndclq8t5 -u admin -p admin --maintainInsertionOrder catalogo/heroku_ndclq8t5
 
-"C:\Program Files\MongoDB\Server\3.6\bin\mongorestore" -h localhost:27017 -d heroku_ndclq8t5 --maintainInsertionOrder catalogo/heroku_ndclq8t5
+"C:\Program Files\MongoDB\Server\3.6\bin\mongorestore" -h localhost:27017 -d catalogo --maintainInsertionOrder catalogo/heroku_ndclq8t5
