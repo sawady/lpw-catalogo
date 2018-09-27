@@ -14,7 +14,7 @@
 				alt="Lo Peor de la Web" height="50" width="300"
 				style="position: relative; top: -15px; left: 0px;"></img></a>
 			</div>
-			<div class="collapse navbar-collapse" ng-controller="UserCtrl as userC">
+			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav sections">
 					<li><a href="#/movies">Películas y documentales</a></li>
 					<li ng-show="userC.puedeAgregarUsuario()"><a href="#/games">Juegos</a></li>
@@ -30,6 +30,7 @@
 							<li><a ng-click="userC.openChangePass()">Cambiar pass</a></li>
 							<li ng-show="userC.puedeAgregarUsuario()"><a ng-click="userC.openAddUser()">Agregar usuario</a></li>
 							<li ng-show="userC.puedeBorrarUsuario()"><a ng-click="userC.openDeleteUser()">Borrar usuario</a></li>
+							<li ng-show="userC.puedeAdministrarUsuarios()"><a ng-click="userC.administrarUsuarios()">Adm. usuarios</a></li>
 							<li class="divider"></li>
 							<li><a ng-click="userC.logOut()">Salir</a></li>
 						</ul>

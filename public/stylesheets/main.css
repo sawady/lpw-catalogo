@@ -205,6 +205,10 @@ height: 100%;
 background-size: 100% 100%;
 }
 
+.users-view {
+  padding-top: 50px;
+}
+
 /*
 In order for the scrollbar to appear, the element(s) 
 should have the typical CSS properties of an overflowed block which are a height (or max-height) value, 

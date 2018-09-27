@@ -19,6 +19,9 @@ app = angular.module('myApp', dependencies)
 angular.module('myApp.routeConfig', ['ngRoute'])
     .config ($routeProvider) ->
         $routeProvider
+            .when('/users/', {
+                templateUrl: '/assets/partials/users.html'
+            })
             .when('/movies/', {
                 templateUrl: '/assets/partials/viewMovies.html'
             })

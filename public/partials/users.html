@@ -1,0 +1,29 @@
+<div class="container users-view">
+    <table class="table">
+        <thead></thead>
+        <th>User</th>
+        <th>Pass</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+        <tbody>
+            <tr ng-repeat="user in userC.service.users">
+                <td>
+                    {{ user.user }}
+                </td>
+                <td>
+                    {{ user.pass }}
+                </td>
+                <td>
+                    {{ user.role }}
+                </td>
+                <td>
+                    <div class="btn-group btn-group-xs editItemsButtons">
+                        <button ng-click="userC.openChangePass(user)" class="btn btn-primary">Cambiar pass</button>
+                        <button ng-click="userC.openEditUser(user)" class="btn btn-warning">Cambiar rol</button>
+                        <button ng-click="userC.openDeleteUser(user)" class="btn btn-danger">Borrar</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

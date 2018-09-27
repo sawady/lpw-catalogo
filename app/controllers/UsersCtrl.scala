@@ -33,6 +33,19 @@ class UsersCtrl @Inject() (val reactiveMongoApi: ReactiveMongoApi) (implicit exe
   import models._
   import models.User._
 
+  def validateAndThen(jr: JsValue)(block: User => Future[Result]): Future[Result] = {
+      // `item` is an instance of their respective case class
+      jr.validate[User].map { block(_) }.getOrElse(Future.successful(BadRequest("invalid json")))
+  }
+
+  def JsonProcess(block: JsValue => Future[Result]): Action[JsValue] = Action.async(parse.json) {
+    request => block(request.body.as[JsValue])
+  }
+
+  def JsonProcessValidated(block: User => Future[Result]): Action[JsValue] = JsonProcess {
+    request => validateAndThen(Utils.fromWeb(request))(block)
+  }
+
   def deleteUser = Action.async(parse.json) {
     request =>
      collection.find(request.body.as[JsObject]).one[User].flatMap(u => 
@@ -75,7 +88,7 @@ class UsersCtrl @Inject() (val reactiveMongoApi: ReactiveMongoApi) (implicit exe
       // cambio el id
       val jr = Utils.fromWeb(request.body.as[JsObject])
 
-      jr.validate[User].filterNot(user => user.user.isEmpty() || user.role.isEmpty() || user.role.isEmpty()).map {
+      jr.validate[User].filterNot(user => user.user.isEmpty() || user.role.isEmpty()).map {
         user =>
           collection.find(Json.obj(("user", JsString(user.user)))).one[User].flatMap(u => 
              u match {
@@ -89,7 +102,35 @@ class UsersCtrl @Inject() (val reactiveMongoApi: ReactiveMongoApi) (implicit exe
         // `user` is an instance of the case class `models.User`
       }.getOrElse(Future.successful(BadRequest("Campos inválidos")))
   }
+
+  def modifyUser = JsonProcessValidated {
+    user =>
+      collection.save(user).map {
+        lastError =>
+          Created(s"User Modified")
+      }
+  }
   
+  def editUser = Action.async(parse.json) {
+    request =>
+      // cambio el id
+      val jr = Utils.fromWeb(request.body.as[JsObject])
+
+      jr.validate[User].filterNot(user => user.user.isEmpty() || user.role.isEmpty()).map {
+        user =>
+          collection.find(Json.obj(("user", JsString(user.user)))).one[User].flatMap(u => 
+             u match {
+               case None => Future.successful(BadRequest("El usuario no existe"))
+               case Some(_) => collection.save(user).map {
+                  lastError =>
+                    Created(s"User Created")
+                }
+             }
+          )
+        // `user` is an instance of the case class `models.User`
+      }.getOrElse(Future.successful(BadRequest("Campos inválidos")))
+  }
+
   def findUser = Action.async(parse.json) {
     request =>
       val jr = request.body.as[JsObject]
@@ -106,6 +147,34 @@ class UsersCtrl @Inject() (val reactiveMongoApi: ReactiveMongoApi) (implicit exe
             case None    => Ok(Json.obj(("error", JsString("error"))))
           }
       }
+  }
+
+  def findUsers = Action.async(parse.json) {
+    request =>
+      val jr = request.body.as[JsObject]
+      
+      val cursor: Cursor[User] = collection.
+        find(jr).
+        cursor[User]
+
+      // gather all the JsObjects in a list
+      val futureList: Future[List[JsValue]] = cursor.collect[List]().map { xs =>
+        xs.map { mv =>
+          Utils.toWeb(Json.toJson(mv))
+        }
+      }
+
+      // transform the list into a JsArray
+      val futureJsonArray: Future[JsArray] = futureList.map { items =>
+        Json.arr(items)
+      }
+
+      // everything's ok! Let's reply with the array
+      futureJsonArray.map {
+        items =>
+          Ok(items(0).get)
+      }
+
   }
 
 }

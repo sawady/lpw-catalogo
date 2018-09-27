@@ -4,7 +4,12 @@ class UserCtrl
     constructor: (@$log, @$location, @$modal, @UsersService) ->
         @$log.debug "constructing UserController"
         @user = @UsersService.user
-    
+        @service = @UsersService
+        if @user.role != "admin"
+            @$location.path("/movies")
+        else
+            @UsersService.getUsers()               
+ 
     logOut: () ->
       @UsersService.logOut()
       @user = @UsersService.user
@@ -18,6 +23,12 @@ class UserCtrl
     puedeBorrarUsuario: () ->
       return @UsersService.isAdmin()
     
+    puedeAdministrarUsuarios: () ->
+      return @UsersService.isAdmin()
+
+    administrarUsuarios: () ->
+        @$location.path("/users")
+
     # LOGUEO
     openLogIn: () ->
     
@@ -135,11 +146,49 @@ class UserCtrl
       modalInstance.result.then(onOk, onOther)
 
     # AGREGAR USUARIO  
-    openDeleteUser: () ->
+    openEditUser: (user) ->
+    
+      modalCtrl = ($scope, $log, $modalInstance, UsersService) ->
+          $scope.user = angular.copy(user)
+
+          $scope.msg = ""
+      
+          $scope.ok = () ->
+              if $scope.user.role.length == 0
+                 $scope.msg = "Ingrese un rol"
+              else if $scope.user.user.length > 0 and $scope.user.pass.length > 0 and $scope.user.role.length > 0
+                 UsersService.editUser($scope.user).then( (data) =>
+	                     $scope.msg = "El usuario ha sido creado"
+	                     $modalInstance.close(true)
+	                , (error) =>
+	                     $log.error "Unable to get User: #{error}"
+	                     $scope.msg = "Error: imposible editar usuario"
+                 )
+
+          $scope.cancel = () ->
+              $modalInstance.dismiss(false)
+    
+      modalInstance = @$modal.open(
+          templateUrl: '/assets/partials/modals/onEditUserModal.html'
+          controller: modalCtrl
+      )
+                    
+      loggg  = @$log
+      m = this
+      
+      onOk = (answer) -> 
+                 loggg.info('Accepted edit user') if answer
+        
+      onOther = () -> loggg.info('Modal dismissed at: ' + new Date())
+       
+      modalInstance.result.then(onOk, onOther)
+
+    # BORRAR USUARIO  
+    openDeleteUser: (user) ->
     
       modalCtrl = ($scope, $log, $modalInstance, UsersService) ->
           $scope.user =
-               user: ""
+               user: if user then user.user else ""
                        
           $scope.msg = ""
       
@@ -174,12 +223,12 @@ class UserCtrl
       modalInstance.result.then(onOk, onOther)
       
     # CAMBIAR CONTRASEÑA  
-    openChangePass: () ->
+    openChangePass: (user) ->
     
       modalCtrl = ($scope, $log, $modalInstance, UsersService) ->
           $scope.user =
-               user: UsersService.user.user
-               pass: ""
+               user: if user then user.user else UsersService.user.user
+               pass: if user then user.pass else ""
                newPass: ""
             
           $scope.msg = ""
@@ -193,7 +242,7 @@ class UserCtrl
                  $scope.msg = "Ingrese un nombre de usuario válido"
                  
               if $scope.user.user.length > 0 and $scope.user.pass.length > 0 and $scope.user.newPass.length > 0
-	              UsersService.changePass($scope.user)
+	              UsersService.changePass($scope.user, user)
 	              .then(
 	                   (data) =>
 	                      $scope.msg = "La contraseña ha cambiado exitosamente"
@@ -221,6 +270,5 @@ class UserCtrl
       onOther = () -> loggg.info('Modal dismissed at: ' + new Date())
        
       modalInstance.result.then(onOk, onOther)
-      
 
 controllersModule.controller('UserCtrl', UserCtrl)

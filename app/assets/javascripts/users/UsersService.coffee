@@ -13,7 +13,7 @@ class UsersService
             @setInvitado()
             
     getRoles: () ->
-        return ["admin","mod","uploader"]
+        return ["admin", "mod", "uploader"]
 
     getCatalogs: () ->
         return ["movies", "games", "music", "series", "soft"]
@@ -81,20 +81,23 @@ class UsersService
             )
         deferred.promise
 
-    changePass: (anUser) ->
-        anUser = @hashPass(anUser)
+    changePass: (anUser, pass) ->
+        if pass == undefined
+            anUser = @hashPass(anUser)
         anUser = @hashNewPass(anUser)
         @$log.debug "saveUser #{angular.toJson(anUser)}"
         deferred = @$q.defer()
 
         @$http.post('/users/changePass', anUser)
         .success((data, status, headers) =>
-                @$log.info("Successfully created user - status #{status}")
+                @$log.info("Successfully modified user - status #{status}")
+                if this.isAdmin()
+                    this.getUsers()
                 deferred.resolve(data)
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to create user - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
             )
         deferred.promise
 
@@ -106,11 +109,28 @@ class UsersService
         @$http.post('/users/save', anUser)
         .success((data, status, headers) =>
                 @$log.info("Successfully created user - status #{status}")
+                this.getUsers()
                 deferred.resolve(data)
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to create user - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
+            )
+        deferred.promise
+
+    editUser: (anUser) ->
+        @$log.debug "editUser #{angular.toJson(anUser)}"
+        deferred = @$q.defer()
+
+        @$http.post('/users/modify', anUser)
+        .success((data, status, headers) =>
+                @$log.info("Successfully edited user - status #{status}")
+                this.getUsers()
+                deferred.resolve(data)
+            )
+        .error((data, status, headers) =>
+                @$log.error("Failed to edit user - status #{status}")
+                deferred.reject(data)
             )
         deferred.promise
 
@@ -121,11 +141,27 @@ class UsersService
         @$http.post('/users/delete', anUser)
         .success((data, status, headers) =>
                 @$log.info("Successfully deleted user - status #{status}")
+                this.getUsers()
                 deferred.resolve(data)
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to delete user - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
+            )
+        deferred.promise
+
+    getUsers: () ->
+        deferred = @$q.defer()
+
+        @$http.post('/users/find', {})
+        .success((data, status, headers) =>
+                @$log.info("Successfully get users - status #{status}")
+                @users = data
+                deferred.resolve(data)
+            )
+        .error((data, status, headers) =>
+                @$log.error("Failed to get users - status #{status}")
+                deferred.reject(data)
             )
         deferred.promise
 
