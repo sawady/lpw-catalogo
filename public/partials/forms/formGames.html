@@ -3,7 +3,7 @@
 	<div class="row">
 	<div ng-controller="SaveGameCtrl as cmc">
 		<div class="row">
-			<legend class="col-sm-12 col-md-12 col-lg-12">Edición</legend>
+			<legend class="col-sm-12 col-md-12 col-lg-12">Edición <span class="pull-right" ng-bind="cmc.item._id"></span></legend>
 		</div>
 		<form id="SaveGameForm" name="SaveGameForm" class="form-vertical"
 			role="form" ng-submit="cmc.save()">
