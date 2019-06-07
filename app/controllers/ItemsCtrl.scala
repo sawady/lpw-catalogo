@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.util.{Failure, Success}
 import scala.concurrent.duration._
 
 import play.api._
@@ -21,6 +22,8 @@ import reactivemongo.play.json._
 import reactivemongo.api.Cursor
 import reactivemongo.core.commands.Count
 import reactivemongo.api.QueryOpts
+
+import reactivemongo.bson.{BSONDocument, BSONObjectID}
 
 /*
 import play.api.libs.json.Json
@@ -94,6 +97,19 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
     collection.db.command(Count(collection.name, Some(req))).map { count =>
       Ok(Json.obj("count" -> count))
     }
+  }
+
+  def get(id: String) = Action.async {
+    BSONObjectID.parse(id).map { 
+      objId =>
+        val future = collection.find(BSONDocument("_id" -> objId)).one[T]
+        future.map {
+          option => option match {
+              case Some(doc) => Ok(Utils.toWeb(Json.toJson(doc)))
+              case None => Ok(Json.obj())
+          }
+        }
+    } getOrElse(Future.successful(Ok(Json.obj())))
   }
   
   def find = JsonProcess {
