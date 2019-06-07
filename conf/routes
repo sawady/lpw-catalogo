@@ -12,6 +12,7 @@ GET     /message                    controllers.AsyncController.message
 # Movie management API
 POST    /movies                     @controllers.MoviesCtrl.find
 GET     /movies/:id                 @controllers.MoviesCtrl.get(id: String)
+GET     /movies/clone/:id           @controllers.MoviesCtrl.cloneLPW(id: String)
 POST    /movies/count               @controllers.MoviesCtrl.countLike
 POST    /movies/save                @controllers.MoviesCtrl.save
 POST    /movies/delete              @controllers.MoviesCtrl.delete
@@ -19,6 +20,7 @@ POST    /movies/delete              @controllers.MoviesCtrl.delete
 # Game management API
 POST    /games                      @controllers.GamesCtrl.find
 GET     /games/:id                  @controllers.GamesCtrl.get(id: String)
+GET     /games/clone/:id            @controllers.GamesCtrl.cloneLPW(id: String)
 POST    /games/count                @controllers.GamesCtrl.countLike
 POST    /games/save                 @controllers.GamesCtrl.save
 POST    /games/delete               @controllers.GamesCtrl.delete
@@ -26,6 +28,7 @@ POST    /games/delete               @controllers.GamesCtrl.delete
 # Soft management API
 POST    /soft                      @controllers.SoftCtrl.find
 GET     /soft/:id                  @controllers.SoftCtrl.get(id: String)
+GET     /soft/clone/:id            @controllers.SoftCtrl.cloneLPW(id: String)
 POST    /soft/count                @controllers.SoftCtrl.countLike
 POST    /soft/save                 @controllers.SoftCtrl.save
 POST    /soft/delete               @controllers.SoftCtrl.delete
@@ -33,6 +36,7 @@ POST    /soft/delete               @controllers.SoftCtrl.delete
 # Music management API
 POST    /music                      @controllers.MusicCtrl.find
 GET     /music/:id                  @controllers.MusicCtrl.get(id: String)
+GET     /music/clone/:id            @controllers.MusicCtrl.cloneLPW(id: String)
 POST    /music/count                @controllers.MusicCtrl.countLike
 POST    /music/save                 @controllers.MusicCtrl.save
 POST    /music/delete               @controllers.MusicCtrl.delete
@@ -40,6 +44,7 @@ POST    /music/delete               @controllers.MusicCtrl.delete
 # Series management API
 POST    /series                      @controllers.SeriesCtrl.find
 GET     /series/:id                  @controllers.SeriesCtrl.get(id: String)
+GET     /series/clone/:id            @controllers.SeriesCtrl.cloneLPW(id: String)
 POST    /series/count                @controllers.SeriesCtrl.countLike
 POST    /series/save                 @controllers.SeriesCtrl.save
 POST    /series/delete               @controllers.SeriesCtrl.delete

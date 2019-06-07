@@ -32,6 +32,8 @@ import play.modules.reactivemongo.json.ImplicitBSONHandlers
 import play.modules.reactivemongo.json.collection.JSONCollection
 */
 
+import play.api.libs.ws._
+
 import models.ItemModel
 import utils.Utils
 
@@ -39,6 +41,7 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
   
   val model: ItemModel[T]
   val colName: String
+  val ws: WSClient
   
   implicit lazy val format: Format[T] = model.format
   
@@ -111,7 +114,17 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
         }
     } getOrElse(Future.successful(Ok(Json.obj())))
   }
-  
+
+  def cloneLPW(id: String) = Action.async {
+    val request: WSRequest = ws.url(s"https://lpw-catalogo.herokuapp.com/$colName/$id")
+    val futureResponse: Future[WSResponse] = request.get()
+
+    futureResponse.map {
+      response =>
+        Ok(response.body)
+    }
+  }
+
   def find = JsonProcess {
     jr =>
       val search = jr.\("search")
