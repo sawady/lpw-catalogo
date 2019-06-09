@@ -16,13 +16,10 @@ class SaveGameCtrl
        
        @panelesDeOpciones = [@format, @platform, @audio, @text, @genero, @requirements]
        
-       @format.setSelected(@item.format)
-       @platform.setSelected(@item.platform)
-       @audio.setSelected(@item.audio)
-       @text.setSelected(@item.text)
-       @genero.setSelected(@item.genero)
-       @requirements.setSelected(@item.requirements)        
-       
+       @refreshForm()
+
+       @cloneInput = ""
+        
     refresh: () ->
        @item.format = @format.getSelected()
        @item.platform = @platform.getSelected()
@@ -34,5 +31,21 @@ class SaveGameCtrl
     save: () ->
        @refresh()
        @GameService.save(@item)
+
+    refreshForm: () ->
+       @format.setSelected(@item.format)
+       @platform.setSelected(@item.platform)
+       @audio.setSelected(@item.audio)
+       @text.setSelected(@item.text)
+       @genero.setSelected(@item.genero)
+       @requirements.setSelected(@item.requirements)
+
+    get: () ->
+       @GameService.getFromLPW(@cloneInput).then(() =>
+            @item = @GameService.selectedItem
+            @item.postID = ""
+            @item.posteador = "sawadypap"
+            @refreshForm()
+       )
 
 controllersModule.controller('SaveGameCtrl', SaveGameCtrl)

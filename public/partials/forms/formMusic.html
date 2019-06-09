@@ -3,7 +3,18 @@
 	<div class="row">
 	<div ng-controller="SaveMusicCtrl as cmc">
 		<div class="row">
-			<legend class="col-sm-12 col-md-12 col-lg-12">Edición <span class="pull-right" ng-bind="cmc.item._id"></span></legend>
+			<legend class="col-sm-12 col-md-12 col-lg-12 title-form">
+				Edición
+				<div class="form-inline clonar-input">
+					<div class="form-group" style="margin-right: 15px;">
+						<label for="title" class="control-label">Clonar ID</label> 
+						<input
+							type="text" class="form-control" name="title" id="title"
+							placeholder="" style="width:150px" ng-model="cmc.cloneInput" ng-change="cmc.get()">
+					</div>
+				</div>
+				<div class="item-id" ng-bind="cmc.item._id"></div>
+			</legend>
 		</div>
 		<form id="SaveMusicForm" name="SaveMusicForm" class="form-vertical"
 			role="form" ng-submit="cmc.save()">

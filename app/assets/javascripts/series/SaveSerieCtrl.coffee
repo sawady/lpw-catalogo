@@ -18,14 +18,9 @@ class SaveSerieCtrl
 
        @panelesDeOpciones = [@temporada, @format, @calidad, @genero, @directores, @reparto, @idioma]
        
-       @capitulo.setSelected(@item.capitulo)
-       @temporada.setSelected(@item.temporada)
-       @format.setSelected(@item.format)
-       @calidad.setSelected(@item.calidad)
-       @genero.setSelected(@item.genero)
-       @directores.setSelected(@item.directores)
-       @reparto.setSelected(@item.reparto)       
-       @idioma.setSelected(@item.idioma)  
+       @refreshForm()
+
+       @cloneInput = ""
        
     refresh: () ->
        @item.capitulo = @capitulo.getSelected()
@@ -40,5 +35,23 @@ class SaveSerieCtrl
     save: () ->
        @refresh()
        @SerieService.save(@item)
+
+    refreshForm: () ->
+       @capitulo.setSelected(@item.capitulo)
+       @temporada.setSelected(@item.temporada)
+       @format.setSelected(@item.format)
+       @calidad.setSelected(@item.calidad)
+       @genero.setSelected(@item.genero)
+       @directores.setSelected(@item.directores)
+       @reparto.setSelected(@item.reparto)
+       @idioma.setSelected(@item.idioma)
+
+    get: () ->
+       @SerieService.getFromLPW(@cloneInput).then(() =>
+            @item = @SerieService.selectedItem
+            @item.postID = ""
+            @item.posteador = "sawadypap"
+            @refreshForm()
+       )
 
 controllersModule.controller('SaveSerieCtrl', SaveSerieCtrl)

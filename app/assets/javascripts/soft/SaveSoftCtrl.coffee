@@ -15,12 +15,10 @@ class SaveSoftCtrl
 	
        @panelesDeOpciones = [@tipo, @platform, @format, @idioma, @requirements]
        
-       @tipo.setSelected(@item.tipo)
-       @platform.setSelected(@item.platform)
-       @format.setSelected(@item.format)
-       @idioma.setSelected(@item.idioma)
-       @requirements.setSelected(@item.requirements)
-       
+       @refreshForm()
+
+       @cloneInput = ""
+
     refresh: () ->
        @item.tipo = @tipo.getSelected()
        @item.platform = @platform.getSelected()
@@ -31,5 +29,20 @@ class SaveSoftCtrl
     save: () ->
        @refresh()
        @SoftService.save(@item)
+
+    refreshForm: () ->
+       @tipo.setSelected(@item.tipo)
+       @platform.setSelected(@item.platform)
+       @format.setSelected(@item.format)
+       @idioma.setSelected(@item.idioma)
+       @requirements.setSelected(@item.requirements)
+
+    get: () ->
+       @SoftService.getFromLPW(@cloneInput).then(() =>
+            @item = @SoftService.selectedItem
+            @item.postID = ""
+            @item.posteador = "sawadypap"
+            @refreshForm()
+       )
 
 controllersModule.controller('SaveSoftCtrl', SaveSoftCtrl)

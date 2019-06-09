@@ -14,12 +14,10 @@ class SaveMovieCtrl
         @actores   = @OptionCtrl.newManyModel('Reparto', [])
         
         @panelesDeOpciones = [@idiomas, @formatos, @calidades, @generos, @actores]
+
+        @refreshForm()
         
-        @idiomas.setSelected(@movie.idioma)
-        @generos.setSelected(@movie.genero)
-        @calidades.setSelected(@movie.calidad)
-        @formatos.setSelected(@movie.formato)
-        @actores.setSelected(@movie.reparto)
+        @cloneInput = ""
         
     refresh: () ->
         @movie.idioma  = @idiomas.getSelected()
@@ -31,5 +29,20 @@ class SaveMovieCtrl
     save: () ->
         @refresh()
         @MovieService.save(@movie)
+
+    refreshForm: () ->
+        @idiomas.setSelected(@movie.idioma)
+        @generos.setSelected(@movie.genero)
+        @calidades.setSelected(@movie.calidad)
+        @formatos.setSelected(@movie.formato)
+        @actores.setSelected(@movie.reparto)
+
+    get: () ->
+       @MovieService.getFromLPW(@cloneInput).then(() => 
+            @movie = @MovieService.selectedItem
+            @movie.postID = ""
+            @movie.posteador = "sawadypap"
+            @refreshForm()
+       )
 
 controllersModule.controller('SaveMovieCtrl', SaveMovieCtrl)

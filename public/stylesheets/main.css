@@ -7,6 +7,26 @@ img {
   clip-path: polygon(0px 208px, 146.5px 207px, 147px 141.2px, ...);
 }
 
+.item-id {
+  flex: 1;
+  text-align: right;  
+}
+
+.title-form {
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+.clonar-input {
+  font-size: 13px;
+  margin-left: 25px;
+}
+
+.clonar-input input {
+  height: 25px;
+}
+
 .nav,.pagination,.carousel,.panel-title a {
 	cursor: pointer;
 }

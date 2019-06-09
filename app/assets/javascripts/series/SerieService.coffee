@@ -59,6 +59,16 @@ class SerieService
         @selectedItem._id = undefined
         @ItemService.updateForm()
 
+    getFromLPW: (id) ->
+       @ItemService.get(id)
+       .then(
+             (data) =>
+               @selectedItem = Object.assign({}, data)
+             ,
+             (error) =>
+               @$log.error "Unable to get series: #{error}"
+       )
+
     deleteItem: (item) ->
         @ItemService.delete(item)
               .then(

@@ -40,7 +40,7 @@ class ItemService
     
     updateForm: () ->
         @$location.path("/#{@ctrlName}/form")
-                
+
     count: (item) ->
         @$log.debug "count #{@ctrlName}"
         
@@ -49,6 +49,22 @@ class ItemService
         @$http.post("/#{@ctrlName}/count", item)
         .success((data, status, headers) =>
                 @$log.info("Successfully counted #{@ctrlName} - status #{status}")
+                deferred.resolve(data)
+            )
+        .error((data, status, headers) =>
+                @$log.error("Failed to list #{@ctrlName} - status #{status}")
+                deferred.reject(data);
+            )
+        deferred.promise
+
+    get: (cloneID) ->
+        @$log.debug "get #{@ctrlName}"
+        
+        deferred = @$q.defer()
+
+        @$http.get("/#{@ctrlName}/clone/#{cloneID}")
+        .success((data, status, headers) =>
+                @$log.info("Successfully getted #{@ctrlName} - status #{status}")
                 deferred.resolve(data)
             )
         .error((data, status, headers) =>

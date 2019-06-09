@@ -14,12 +14,10 @@ class SaveMusicCtrl
        @interprete   = @OptionCtrl.newManyModel('Interprete (Opcional)', [])
 
        @panelesDeOpciones = [@tipo, @idioma, @calidad, @genero, @interprete]
+
+       @refreshForm()
        
-       @tipo.setSelected(@item.tipo)
-       @idioma.setSelected(@item.idioma)
-       @calidad.setSelected(@item.calidad)
-       @genero.setSelected(@item.genero)
-       @interprete.setSelected(@item.interprete)
+       @cloneInput = ""
        
     refresh: () ->
        @item.tipo = @tipo.getSelected()
@@ -31,5 +29,20 @@ class SaveMusicCtrl
     save: () ->
        @refresh()
        @MusicService.save(@item)
+
+    refreshForm: () ->
+       @tipo.setSelected(@item.tipo)
+       @idioma.setSelected(@item.idioma)
+       @calidad.setSelected(@item.calidad)
+       @genero.setSelected(@item.genero)
+       @interprete.setSelected(@item.interprete)
+
+    get: () ->
+       @MusicService.getFromLPW(@cloneInput).then(() =>
+            @item = @MusicService.selectedItem
+            @item.postID = ""
+            @item.posteador = "sawadypap"
+            @refreshForm()
+       )
 
 controllersModule.controller('SaveMusicCtrl', SaveMusicCtrl)
