@@ -17,9 +17,9 @@
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav sections">
 					<li><a ng-href="#/movies/{{userC.posteador()}}">Películas y documentales</a></li>
-					<li ng-show="true || userC.puedeAgregarUsuario()"><a ng-href="#/games/{{userC.posteador()}}">Juegos</a></li>
-					<li ng-show="true || userC.puedeAgregarUsuario()"><a ng-href="#/music/{{userC.posteador()}}">Música y recitales</a></li>
-					<li ng-show="true || userC.puedeAgregarUsuario()"><a ng-href="#/series/{{userC.posteador()}}">Series</a></li>
+					<li ng-show="userC.puedeAgregarUsuario()"><a ng-href="#/games/{{userC.posteador()}}">Juegos</a></li>
+					<li ng-show="userC.puedeAgregarUsuario()"><a ng-href="#/music/{{userC.posteador()}}">Música y recitales</a></li>
+					<li ng-show="userC.puedeAgregarUsuario()"><a ng-href="#/series/{{userC.posteador()}}">Series</a></li>
 					<li ng-show="true || userC.puedeAgregarUsuario()"><a ng-href="#/soft/{{userC.posteador()}}">Software y sistemas operativos</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
