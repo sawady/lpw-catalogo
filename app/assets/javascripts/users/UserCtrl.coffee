@@ -1,14 +1,17 @@
 
 class UserCtrl
 
-    constructor: (@$log, @$location, @$modal, @UsersService) ->
+    constructor: (@$log, @$location, @$modal, @UsersService, @$route) ->
         @$log.debug "constructing UserController"
         @user = @UsersService.user
         @service = @UsersService
         if @user.role != "admin"
             @$location.path("/movies")
         else
-            @UsersService.getUsers()               
+            @UsersService.getUsers()
+
+    posteador: () ->
+      return @$route.current.params.posteador
  
     logOut: () ->
       @UsersService.logOut()

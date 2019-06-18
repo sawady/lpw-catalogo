@@ -1,10 +1,11 @@
 
 class SerieService
 
-    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService) ->
+    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService, @$route) ->
         @$log.debug "constructing SerieService"
         
-        @search  = {}
+        @newSearch()
+
         @results = []
         @selectedItem = {}
         
@@ -30,8 +31,13 @@ class SerieService
 		
         @panelesDeOpciones = [@temporada, @format, @calidad, @genero, @directores, @reparto, @idioma]
 
+    newSearch: () ->
+        @search  = {
+           posteador: @$route.current.params.posteador
+        }
+
     view: () ->
-        @ItemService.viewSeries()
+        @ItemService.initializeFor("series")
                 
     initializeService: () ->
         @view()
@@ -42,7 +48,7 @@ class SerieService
         return @results.length > 0
 
     resetSearch: () ->
-        @search = {}
+        @newSearch()
         p.reset() for p in @panelesDeOpciones
         @pageCtrl.setPage(1)
 
@@ -179,5 +185,11 @@ class SerieService
       onOther = () -> loggg.info('Modal dismissed at: ' + new Date())
        
       modalInstance.result.then(onOk, onOther)
+
+    hasLang: (m, lang) ->
+       if lang
+          return lang in m.idioma
+       else
+          return m.idioma
 
 servicesModule.service('SerieService', SerieService)

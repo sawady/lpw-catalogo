@@ -2,7 +2,7 @@
 	&NonBreakingSpace;
 	<div class="row">
 		<h4>
-			Series
+			Series <i>{{ctrl.service.search.posteador ? 'de ' + ctrl.service.search.posteador : ''}}</i>
 			<add-item-button model="ctrl.service"></add-item-button>
 		</h4>
 		<hr>
@@ -14,7 +14,7 @@
 			
 			<text-input-search title="'Título'" model="ctrl.service.search.title"> </text-input-search>
 			<number-input-search title="'Año'" model="ctrl.service.search.year"> </number-input-search>
-			<text-input-search title="'Autor del post'" model="ctrl.service.search.posteador"> </text-input-search>
+			<text-input-search ng-hide={{!!ctrl.service.search.posteador}} title="'Autor del post'" model="ctrl.service.search.posteador"> </text-input-search>
 			
 			<option-single-search model="ctrl.service.capitulo"> </option-single-search>
 			<option-many-search model="ctrl.service.temporada"> </option-many-search>

@@ -1,10 +1,11 @@
 
 class SoftService
 
-    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService) ->
+    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService, @$route) ->
         @$log.debug "constructing SoftService"
         
-        @search  = {}
+        @newSearch()
+
         @results = []
         @selectedItem = {}
         
@@ -26,8 +27,13 @@ class SoftService
 		
         @panelesDeOpciones = [@tipo, @platform, @format, @idioma, @requirements]
 
+    newSearch: () ->
+        @search  = {
+           posteador: @$route.current.params.posteador
+        }
+
     view: () ->
-        @ItemService.viewSoft()
+        @ItemService.initializeFor("soft")
                 
     initializeService: () ->
         @view()
@@ -38,7 +44,7 @@ class SoftService
         return @results.length > 0
 
     resetSearch: () ->
-        @search = {}
+        @newSearch()
         p.reset() for p in @panelesDeOpciones
         @pageCtrl.setPage(1)
 
@@ -172,5 +178,11 @@ class SoftService
       onOther = () -> loggg.info('Modal dismissed at: ' + new Date())
        
       modalInstance.result.then(onOk, onOther)
+
+    hasLang: (m, lang) ->
+       if lang
+          return lang in m.idioma
+       else
+          return m.idioma
 
 servicesModule.service('SoftService', SoftService)

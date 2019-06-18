@@ -1,10 +1,11 @@
 
 class MusicService
 
-    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService) ->
+    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService, @$route) ->
         @$log.debug "constructing MusicService"
         
-        @search  = {}
+        @newSearch()
+
         @results = []
         @selectedItem = {}
         
@@ -25,8 +26,13 @@ class MusicService
 
         @panelesDeOpciones = [@tipo, @idioma, @calidad, @genero, @interprete]
 
+    newSearch: () ->
+        @search  = {
+           posteador: @$route.current.params.posteador
+        }
+
     view: () ->
-        @ItemService.viewMusic()
+        @ItemService.initializeFor("music")
                 
     initializeService: () ->
         @view()
@@ -37,7 +43,7 @@ class MusicService
         return @results.length > 0
 
     resetSearch: () ->
-        @search = {}
+        @newSearch()
         p.reset() for p in @panelesDeOpciones
         @pageCtrl.setPage(1)
 
@@ -171,5 +177,11 @@ class MusicService
       onOther = () -> loggg.info('Modal dismissed at: ' + new Date())
        
       modalInstance.result.then(onOk, onOther)
+
+    hasLang: (m, lang) ->
+       if lang
+          return lang in m.idioma
+       else
+          return m.idioma
 
 servicesModule.service('MusicService', MusicService)

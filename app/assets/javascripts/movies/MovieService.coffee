@@ -1,10 +1,11 @@
 
 class MovieService
 
-    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService) ->
+    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService, @$route) ->
         @$log.debug "constructing MovieService"
-        
-        @search  = {}
+
+        @newSearch()
+
         @results = []
         @selectedItem = {}
         
@@ -24,9 +25,14 @@ class MovieService
         @actores   = @OptionCtrl.newManyModel('Reparto', [])
         
         @panelesDeOpciones = [@idiomas, @calidades, @formatos, @generos, @actores]
+
+    newSearch: () ->
+        @search  = {
+           posteador: @$route.current.params.posteador
+        }
         
     view: () ->
-        @ItemService.viewMovies()
+        @ItemService.initializeFor("movies")
                 
     initializeService: () ->
         @view()
@@ -37,7 +43,7 @@ class MovieService
         return @results.length > 0
 
     resetSearch: () ->
-        @search = {}
+        @newSearch()
         p.reset() for p in @panelesDeOpciones
         @pageCtrl.setPage(1)
 

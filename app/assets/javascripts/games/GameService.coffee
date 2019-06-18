@@ -1,10 +1,11 @@
 
 class GameService
 
-    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService) ->
+    constructor: (@$log, @$location, @OptionCtrl, @ItemService, @$modal, @UsersService, @PageService, @$route) ->
         @$log.debug "constructing GameService"
         
-        @search  = {}
+        @newSearch()
+
         @results = []
         @selectedItem = {}
         
@@ -28,8 +29,13 @@ class GameService
 		
         @panelesDeOpciones = [@format, @platform, @audio, @text, @genero, @requirements]
 
+    newSearch: () ->
+        @search  = {
+           posteador: @$route.current.params.posteador
+        }
+
     view: () ->
-        @ItemService.viewGames()
+        @ItemService.initializeFor("games")
                 
     initializeService: () ->
         @view()
@@ -40,7 +46,7 @@ class GameService
         return @results.length > 0
 
     resetSearch: () ->
-        @search = {}
+        @newSearch()
         p.reset() for p in @panelesDeOpciones
         @pageCtrl.setPage(1)
 

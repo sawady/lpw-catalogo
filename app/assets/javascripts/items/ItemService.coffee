@@ -6,22 +6,7 @@ class ItemService
 
     constructor: (@$log, @$location, @$http, @$q) ->
         @$log.debug "constructing ItemService"
-        
-    viewMovies: () ->
-        @initializeFor("movies")
-
-    viewGames: () ->
-        @initializeFor("games")
-
-    viewMusic: () ->
-        @initializeFor("music")
-
-    viewSeries: () ->
-        @initializeFor("series")
-
-    viewSoft: () ->
-        @initializeFor("soft")
-        
+  
     initializeFor: (name) ->
         @ctrlName = name
         
@@ -53,7 +38,7 @@ class ItemService
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to list #{@ctrlName} - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
             )
         deferred.promise
 
@@ -69,7 +54,7 @@ class ItemService
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to list #{@ctrlName} - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
             )
         deferred.promise
 
@@ -84,7 +69,7 @@ class ItemService
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to list #{@ctrlName} - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
             )
         deferred.promise
 
@@ -100,7 +85,7 @@ class ItemService
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to create #{@ctrlName} - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
             )
         deferred.promise
         
@@ -115,7 +100,7 @@ class ItemService
             )
         .error((data, status, headers) =>
                 @$log.error("Failed to delete #{@ctrlName} - status #{status}")
-                deferred.reject(data);
+                deferred.reject(data)
             )
         deferred.promise
 
