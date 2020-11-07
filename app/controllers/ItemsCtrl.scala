@@ -9,8 +9,9 @@ import scala.concurrent.duration._
 import play.api._
 import play.api.mvc._
 import play.api.libs.json._
+import reactivemongo.play.json._
+import reactivemongo.play.json.collection.JSONCollection
 
-import play.modules.reactivemongo.json.collection._
 import play.modules.reactivemongo.{
   MongoController,
   ReactiveMongoApi,
@@ -20,7 +21,6 @@ import play.modules.reactivemongo.{
 // BSON-JSON conversions/collection
 import reactivemongo.play.json._
 import reactivemongo.api.Cursor
-import reactivemongo.core.commands.Count
 import reactivemongo.api.QueryOpts
 
 import reactivemongo.bson.{BSONDocument, BSONObjectID}
@@ -53,7 +53,7 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
    * Play hot-reloading.
    */
   
-  def collection: JSONCollection = db.collection[JSONCollection](colName)
+  def collection: Future[JSONCollection] = reactiveMongoApi.database.map(_.collection[JSONCollection](colName))
   
   def JsonProcess(block: JsValue => Future[Result]): Action[JsValue] = Action.async(parse.json) {
     request => block(request.body.as[JsValue])
@@ -75,15 +75,15 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
   def delete = JsonProcess {
     request =>
       val jr = Utils.fromWeb(request)
-      collection.remove(Utils.getId(jr).as[JsObject]).map {
+      collection.flatMap(_.remove(Utils.getId(jr).as[JsObject]).map {
         lastError =>
           Ok(s"Item Deleted")
-      }
+      })
   }
 
   def save = JsonProcessValidated {
     item =>
-      collection.save(item).map {
+      collection.flatMap(_.save(item)).map {
         lastError =>
           Created(s"Item Created")
       }
@@ -97,7 +97,7 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
 
     val req = ImplicitBSONHandlers.JsObjectWriter.write(model.toSearchFields(search, validKeys))
 
-    collection.db.command(Count(collection.name, Some(req))).map { count =>
+    collection.flatMap(_.count()).map { count =>
       Ok(Json.obj("count" -> count))
     }
   }
@@ -105,7 +105,7 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
   def get(id: String) = Action.async {
     BSONObjectID.parse(id).map { 
       objId =>
-        val future = collection.find(BSONDocument("_id" -> objId)).one[T]
+        val future = collection.flatMap(_.find(BSONDocument("_id" -> objId)).one[T])
         future.map {
           option => option match {
               case Some(doc) => Ok(Utils.toWeb(Json.toJson(doc)))
@@ -136,7 +136,7 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
   def findLike(jsobj: JsObject, pageNumber: Int) = {
     val numberPerPage = 8
 
-    val cursor: Cursor[T] = collection.
+    val cursor: Future[Cursor[T]] = collection.map(_.
       // find all
       find(jsobj).
       // sort them by creation date
@@ -144,14 +144,14 @@ abstract class Items[T] (implicit exec: ExecutionContext) extends Controller wit
       // skip based on pageNumber
       options(QueryOpts((pageNumber - 1) * numberPerPage, numberPerPage)).
       // perform the query and get a cursor of JsObject
-      cursor[T]
+      cursor[T])
 
     // gather all the JsObjects in a list
-    val futureList: Future[List[JsValue]] = cursor.collect[List](numberPerPage).map { xs =>
+    val futureList: Future[List[JsValue]] = cursor.flatMap(_.collect[List](numberPerPage).map { xs =>
       xs.map { mv =>
         Utils.toWeb(Json.toJson(mv))
       }
-    }
+    })
 
     // transform the list into a JsArray
     val futureJsonArray: Future[JsArray] = futureList.map { items =>

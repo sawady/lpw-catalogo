@@ -2,7 +2,7 @@ name := """lpw-catalogo"""
 
 version := "1.0-SNAPSHOT"
 
-val reactiveMongoVer = "0.17.1"
+val reactiveMongoVer = "0.11.14"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
