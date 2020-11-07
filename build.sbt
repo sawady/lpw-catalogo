@@ -12,6 +12,6 @@ libraryDependencies += ws
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0" % Test
 
 // only for Play 2.5.x
-libraryDependencies += "org.reactivemongo" %% "play2-reactivemongo" % "0.20.13-play25"
+libraryDependencies += "org.reactivemongo" %% "play2-reactivemongo" % "0.17.1-play25"
 
 
